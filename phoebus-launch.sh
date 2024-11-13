@@ -2,6 +2,25 @@
 
 # Runs phoebus in the https://github.com/epics-containers/ec-phoebus container.
 
+GREEN_START="\u001b[32m"
+GREEN_STOP="\u001b[0m"
+RED_START="\u001b[31m"
+RED_STOP="\u001b[0m"
+
+DEFAULT_PYTHON="3.11"
+
+INDENT_LINE="━━━━━━━━━━━━━━━┫"
+
+SCRIPT_DIR="$(dirname "$0")"
+
+crazy_print_green() {
+  echo -e "${GREEN_START}${INDENT_LINE} $1 ${GREEN_STOP}"
+}
+
+crazy_print_red() {
+  echo -e "${RED_START}${INDENT_LINE} $1 ${RED_STOP}"
+}
+
 thisdir=$(realpath $(dirname ${BASH_SOURCE[0]}))
 workspace=$(realpath ${thisdir}/..)
 
@@ -12,16 +31,18 @@ elif [[ $(podman --version 2>/dev/null) == *podman* ]]; then
   docker=podman
   args="--security-opt=label=type:container_runtime_t"
 else
-  echo "Neither Docker nor Podman is installed. Please install one of them to proceed."
+  crazy_print_red "Neither Docker nor Podman is installed. Please install one of them to proceed."
   exit 1
 fi
 
 show_help() {
+  echo -e "${GREEN_START}"
   echo "Usage: $(basename $0) [options]"
   echo
   echo "Options:"
   echo "  --bobfiles <dirs>    Comma-separated list of directories to mount"
   echo "  --help               Show this help message and exit"
+  echo -e "${GREEN_STOP}"
 }
 
 # Parse arguments
@@ -39,7 +60,7 @@ while [[ $# -gt 0 ]]; do
     exit 0
     ;;
   *)
-    echo "Unknown option $1"
+    crazy_print_red "Unknown option $1"
     exit 1
     ;;
   esac
@@ -51,7 +72,8 @@ for dir in "${bobfiles[@]}"; do
     dir_name=$(basename "$dir")
     mounts+=" -v=${dir}:/phoebus/${dir_name}"
   else
-    echo "Warning: ${dir} is not a directory and will be skipped."
+    crazy_print_red "Could not find directory $dir"
+    exit 1
   fi
 done
 
