@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier
+_commit: 2.5.0
+_src_path: gh:DiamondLightSource/python-copier-template
+author_email: eva.lott@diamond.ac.uk
+author_name: Eva Lott
+description: TODOREMOVE
+distribution_name: TODOREMOVE
+docker: true
+docs_type: README
+git_platform: github.com
+github_org: evalott100
+package_name: TODOREMOVE
+pypi: false
+repo_name: DLSPhoebus
+type_checker: pyright
