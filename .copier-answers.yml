@@ -3,7 +3,7 @@ _commit: 2.5.0
 _src_path: gh:DiamondLightSource/python-copier-template
 author_email: eva.lott@diamond.ac.uk
 author_name: Eva Lott
-description: TODOREMOVE
+description: A container for launching CSS Phoebus with the configuration we want.
 distribution_name: TODOREMOVE
 docker: true
 docs_type: README
